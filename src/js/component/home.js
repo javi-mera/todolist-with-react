@@ -1,5 +1,4 @@
 import React from "react";
-
 //create your first component
 export class Home extends React.Component {
 	constructor() {
@@ -8,32 +7,37 @@ export class Home extends React.Component {
 			todos: []
 		};
 	}
-
 	render() {
 		let addTask = value => {
+			console.log(value);
+			let newTask = {
+				task: value.target.value,
+				id: this.state.todos.length
+			};
 			if (value.keyCode == 13) {
 				this.setState({
-					todos: [...this.state.todos, value.target.value]
+					todos: [...this.state.todos, newTask]
 				});
+				console.log(newTask, "enga");
 			}
 		};
-
-		let removeItem = value => {
+		let removeItem = id => {
 			this.setState({
-				todos: this.state.todos.filter(element => element != value)
+				todos: this.state.todos.filter(element => element.id != id)
+				//todos: this.state.todos.splice(task, 1)
 			});
 		};
-
 		let tasksToRender = this.state.todos.map(task => {
+			console.log(task, "yuhu");
 			return (
 				<li
 					className="list-group-item col justify-content-between"
-					key={task}>
+					key={task.id}>
 					<div className="row justify-content-between">
-						<label className="col-11">{task}</label>
+						<label className="col-11">{task.task}</label>
 						<div className="col-1">
 							<button
-								onClick={() => removeItem(task)}
+								onClick={() => removeItem(task.id)}
 								className=""
 								value="">
 								x
